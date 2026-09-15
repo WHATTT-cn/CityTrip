@@ -1,0 +1,167 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* 暖纸主题：奶油纸底 + 秋叶金 + 鼠尾草绿 + 珊瑚橙 */
+    --background: 33 52% 93%;          /* #F7EDE2 奶油纸 */
+    --foreground: 24 22% 16%;          /* 暖墨 */
+    --card: 36 60% 96%;                /* #FDF9F0 卡片 */
+    --card-foreground: 24 22% 16%;
+    --popover: 36 60% 96%;
+    --popover-foreground: 24 22% 16%;
+    --primary: 160 14% 42%;            /* 鼠尾草绿 */
+    --primary-foreground: 36 60% 96%;
+    --secondary: 38 48% 88%;
+    --secondary-foreground: 24 22% 20%;
+    --muted: 36 30% 88%;
+    --muted-foreground: 26 12% 42%;
+    --accent: 14 72% 55%;              /* 珊瑚橙 */
+    --accent-foreground: 36 60% 96%;
+    --destructive: 0 70% 50%;
+    --destructive-foreground: 36 60% 96%;
+    --border: 30 24% 82%;
+    --input: 30 24% 80%;
+    --ring: 160 14% 42%;
+    --radius: 1rem;
+    --gold: 42 55% 52%;                /* 秋叶金 */
+  }
+
+  * {
+    @apply border-border;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply text-foreground antialiased;
+    font-family: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans SC", sans-serif;
+    background-color: #f7ede2;
+    /* 纸张噪点纹理 */
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3CfeColorMatrix values='0 0 0 0 0.45 0 0 0 0 0.38 0 0 0 0 0.30 0 0 0 0.05 0'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  .font-display {
+    font-family: "Noto Serif SC", "Songti SC", "STSong", serif;
+  }
+}
+
+@layer utilities {
+  /* 入场动效：上浮 + 淡入 */
+  @keyframes rise-in {
+    from { opacity: 0; transform: translateY(18px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .animate-rise {
+    animation: rise-in 0.55s cubic-bezier(0.22, 0.9, 0.3, 1) both;
+  }
+
+  /* 打卡成功：叶片弹跳 */
+  @keyframes pop-leaf {
+    0% { transform: scale(0.4) rotate(-14deg); opacity: 0; }
+    60% { transform: scale(1.15) rotate(6deg); opacity: 1; }
+    100% { transform: scale(1) rotate(0deg); opacity: 1; }
+  }
+  .animate-pop-leaf {
+    animation: pop-leaf 0.45s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+  }
+
+  /* 天气图标漂浮 */
+  @keyframes float-soft {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-5px); }
+  }
+  .animate-float-soft {
+    animation: float-soft 3.2s ease-in-out infinite;
+  }
+
+  /* 按钮涟漪呼吸（主 CTA） */
+  @keyframes cta-glow {
+    0%, 100% { box-shadow: 0 6px 18px -6px rgba(20, 163, 116, 0.0), 0 4px 14px -4px rgba(226, 114, 61, 0.45); }
+    50% { box-shadow: 0 8px 26px -6px rgba(226, 114, 61, 0.65); }
+  }
+  .animate-cta-glow {
+    animation: cta-glow 2.6s ease-in-out infinite;
+  }
+
+  /* 徽章旋转慢闪 */
+  @keyframes spin-slow {
+    to { transform: rotate(360deg); }
+  }
+  .animate-spin-slow {
+    animation: spin-slow 14s linear infinite;
+  }
+
+  .text-balance {
+    text-wrap: balance;
+  }
+}
+
+/* 通用交互：按钮与可点击卡片 */
+.interactive {
+  transition: transform 0.18s ease, box-shadow 0.18s ease, background-color 0.18s ease, color 0.18s ease, border-color 0.18s ease;
+}
+.interactive:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 24px -10px rgba(70, 50, 30, 0.28);
+}
+.interactive:active {
+  transform: translateY(0) scale(0.97);
+  box-shadow: 0 4px 10px -6px rgba(70, 50, 30, 0.25);
+}
+
+.card-lift {
+  transition: transform 0.22s cubic-bezier(0.22, 0.9, 0.3, 1), box-shadow 0.22s ease;
+}
+.card-lift:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 18px 38px -14px rgba(70, 50, 30, 0.35);
+}
+.card-lift:hover .card-img {
+  transform: scale(1.06);
+}
+.card-img {
+  transition: transform 0.5s cubic-bezier(0.22, 0.9, 0.3, 1);
+}
+
+/* 导航下划线滑动 */
+.nav-link {
+  position: relative;
+  transition: color 0.18s ease;
+}
+.nav-link::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: -4px;
+  width: 0;
+  height: 2.5px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #d98e4a, #e2723d);
+  transition: width 0.22s ease, left 0.22s ease;
+}
+.nav-link:hover::after,
+.nav-link.active::after {
+  width: 70%;
+  left: 15%;
+}
+
+/* 标签选择芯片 */
+.chip {
+  transition: all 0.16s ease;
+}
+.chip:hover {
+  transform: translateY(-1px) scale(1.03);
+}
+.chip:active {
+  transform: scale(0.95);
+}
+
+/* 滚动条 */
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #d8c6ac; border-radius: 999px; border: 2px solid #f7ede2; }
+::-webkit-scrollbar-thumb:hover { background: #c4ab8a; }
