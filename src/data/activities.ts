@@ -1,11 +1,12 @@
 import type { Activity, Guide, TeamPost } from "@/types";
+import { asset } from "@/lib/utils";
 
 /**
  * 本地活动数据（示例数据集，可替换为真实接口）。
  * 图片位说明：每个 image 字段对应 public/images/ 下的一张图，
  * 想替换配图时，把新图片放进 public/images/ 并修改这里的路径即可。
  */
-export const ACTIVITIES: Activity[] = [
+const RAW_ACTIVITIES: Activity[] = [
   {
     id: "a1",
     title: "银杏大道城市漫步",
@@ -177,6 +178,12 @@ export const ACTIVITIES: Activity[] = [
     openTime: "18:00 - 22:00",
   },
 ];
+
+/** 对外导出：统一为图片路径加上部署基路径前缀 */
+export const ACTIVITIES: Activity[] = RAW_ACTIVITIES.map((a) => ({
+  ...a,
+  image: asset(a.image),
+}));
 
 /** 预置组队帖（演示数据） */
 export const SEED_TEAMS: TeamPost[] = [

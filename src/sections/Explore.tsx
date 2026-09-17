@@ -1,6 +1,7 @@
 import ActivityCard from "@/components/ActivityCard";
 import PreferencePanel from "@/components/PreferencePanel";
 import { recommend, type ScoredActivity } from "@/lib/recommend";
+import { asset } from "@/lib/utils";
 import { ACTIVITIES } from "@/data/activities";
 import type { Prefs } from "@/types";
 import { ArrowDown, Compass } from "lucide-react";
@@ -43,7 +44,7 @@ export default function Explore({ prefs, onPrefsChange, onTeamUp, onCheckIn, che
       {/* Hero：图片位（主视觉）——金黄银杏大道，暖金色调 */}
       <header className="relative overflow-hidden rounded-[2rem] shadow-[0_24px_50px_-24px_rgba(70,50,30,0.5)]">
         <img
-          src="/images/hero-ginkgo.jpg"
+          src={asset("/images/hero-ginkgo.jpg")}
           alt="秋日银杏大道"
           className="h-[340px] w-full object-cover sm:h-[420px]"
         />
